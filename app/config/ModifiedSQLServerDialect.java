@@ -1,7 +1,12 @@
 package config;
 
-/**
- * Created by vitaliys on 14.07.16.
- */
-public class ModifiedSQLServerDialect {
+import org.hibernate.dialect.SQLServer2008Dialect;
+
+import java.sql.Types;
+
+public class ModifiedSQLServerDialect extends SQLServer2008Dialect {
+    public ModifiedSQLServerDialect(){
+        super();
+        registerColumnType(Types.TIMESTAMP,"datetime");
+    }
 }

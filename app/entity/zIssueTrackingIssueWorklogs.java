@@ -6,28 +6,29 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.hibernate.annotations.DynamicUpdate;
 import org.joda.time.DateTime;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-
-
-/**
- * Created by vitaliys on 13.07.16.
- */
+import javax.persistence.*;
 
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @DynamicUpdate
 public class zIssueTrackingIssueWorklogs {
-
     private Integer TargetId;
     private Integer WorklogId;
     private String IssueId;
-    private DateTime CreatedTime;
-    private DateTime    StartedTime;
-    private DateTime UpdateTime;
+    private DateTime CreatedDate;
+    private DateTime StartedDate;
+    private DateTime UpdatedDate;
     private Integer TimeInSeconds;
     private String UserKey;
+    private String Comment;
+
+    public String getComment() {
+        return Comment;
+    }
+
+    public void setComment(String comment) {
+        Comment = comment;
+    }
 
     @GeneratedValue
     @Id
@@ -39,6 +40,7 @@ public class zIssueTrackingIssueWorklogs {
     public void setTargetId(Integer targetId) {
         TargetId = targetId;
     }
+
     @JsonIgnore
     public Integer getWorklogId() {
         return WorklogId;
@@ -47,7 +49,9 @@ public class zIssueTrackingIssueWorklogs {
     public void setWorklogId(Integer worklogId) {
         WorklogId = worklogId;
     }
+
     @JsonIgnore
+
     public String getIssueId() {
         return IssueId;
     }
@@ -55,30 +59,31 @@ public class zIssueTrackingIssueWorklogs {
     public void setIssueId(String issueId) {
         IssueId = issueId;
     }
-    @JsonIgnore
-    public DateTime getCreatedTime() {
-        return CreatedTime;
+
+    public DateTime getCreatedDate() {
+        return CreatedDate;
     }
 
-    public void setCreatedTime(DateTime createdTime) {
-        CreatedTime = createdTime;
-    }
-    @JsonIgnore
-    public DateTime getStartedTime() {
-        return StartedTime;
+    public void setCreatedDate(DateTime createdDate) {
+        CreatedDate = createdDate;
     }
 
-    public void setStartedTime(DateTime startedTime) {
-        StartedTime = startedTime;
-    }
-    @JsonIgnore
-    public DateTime getUpdateTime() {
-        return UpdateTime;
+    public DateTime getStartedDate() {
+        return StartedDate;
     }
 
-    public void setUpdateTime(DateTime updateTime) {
-        UpdateTime = updateTime;
+    public void setStartedDate(DateTime startedDate) {
+        StartedDate = startedDate;
     }
+
+    public DateTime getUpdatedDate() {
+        return UpdatedDate;
+    }
+
+    public void setUpdatedDate(DateTime updatedDate) {
+        UpdatedDate = updatedDate;
+    }
+
     @JsonIgnore
     public Integer getTimeInSeconds() {
         return TimeInSeconds;
@@ -87,6 +92,7 @@ public class zIssueTrackingIssueWorklogs {
     public void setTimeInSeconds(Integer timeInSeconds) {
         TimeInSeconds = timeInSeconds;
     }
+
     @JsonIgnore
     public String getUserKey() {
         return UserKey;
@@ -95,7 +101,9 @@ public class zIssueTrackingIssueWorklogs {
     public void setUserKey(String userKey) {
         UserKey = userKey;
     }
+
+    public void formate(){
+
+    }
 }
-
-
 
