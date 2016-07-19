@@ -2,7 +2,7 @@ package service
 import java.sql._
 
 import entity.zIssueTrackingIssueWorklogs
-import org.hibernate.{Query, Session}
+
 import org.joda.time.DateTime
 
 
@@ -40,7 +40,7 @@ class GlobalService {
       val resultList = resultIter.toList
       resultList
     } catch {
-      case e:SQLException => e.getSQLState
+      case e:SQLException => e.getNextException
         List()
     }
   }
@@ -78,7 +78,7 @@ class GlobalService {
       val resultList = resultIter.toList
       resultList
     }catch {
-      case e:SQLException => e.getSQLState
+      case e:SQLException => e.getNextException
         List()
     }
   }
@@ -101,7 +101,7 @@ class GlobalService {
       result.getInt(1)
 
   }catch {
-      case e: SQLException => e.getSQLState
+      case e: SQLException => e.getNextException
         0
     }finally {closeConnection()}
 }

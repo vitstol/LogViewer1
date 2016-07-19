@@ -5,6 +5,7 @@ table {
     font-family: 'Open Sans', sans-serif;
     font-weight: bold;
     border: 2px solid #F9C941;
+    text-align: left;
 
 }
 th {
