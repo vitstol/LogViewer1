@@ -23,7 +23,7 @@ class Application extends Controller {
     val beginDate:String = request.body.asFormUrlEncoded.get("begindate").head
     val endingDate:String = request.body.asFormUrlEncoded.get("endingdate").head
     val testService: GlobalService = new GlobalService
-    Ok(views.html.startPage(testService.getUserKeys, (keyUser),
+    Ok(views.html.startPage(testService.getUserKeys, keyUser,
       testService.getWorkLogs(keyUser,beginDate,endingDate),
       testService.getTimeInHourFromCurrentYear(keyUser,beginDate,endingDate)))
   }

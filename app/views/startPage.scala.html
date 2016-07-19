@@ -4,7 +4,7 @@
 @*TODO add beautffull styles*@
 @main("Welcome to LogViewer") {
   <form action="/" method="post"  >
-    <h4>Please select user</h4>
+    <h2 style="color: #52a4ff"> Please, select user</h2>
     <select size="1" id="keyuser" name="keyuser">
       <option value="All">
         all
@@ -15,34 +15,34 @@
         </option>
       }
     </select>
-    <label for="begindate">Set the begin date
+    <label for="begindate" style="color: #52a4ff;">Set the begin date
       <input type="text" placeholder="yyyy-MM-dd " value="" id="begindate" name="begindate"/>
     </label>
-    <label for="endingdate">Set the end date
+    <label for="endingdate" style="color: #52a4ff;">Set the end date
       <input type="text" placeholder="yyyy-MM-dd"  value="" id = "endingdate" name="endingdate"/>
     </label>
     <p> <button type="submit" id="button">Submit</button> </p>
 
 
-    <h4>work logs</h4>
+
     @if(!workLogs.isEmpty) {
       @* TODO add table here*@
-      <table border="1">
-
-          <tr>
-            <th>Sum time in hour</th>
-            <th>@time hours</th>
-          </tr>
-
+      <h4 style="color: #52a4ff;">Work Logs</h4>
+      <table align = "left" width=100%>
         <tr>
-          <th>UserKey</th>
-          <th>IssueId</th>
-          <th>TimeInSecond</th>
-          <th>StartedTime</th>
-          <th>Comment</th>
+          <th>Sum time in hour</th>
+          <th>@time hours</th>
         </tr>
 
-        @for(workLog:zIssueTrackingIssueWorklogs<-workLogs){
+        <tr>
+          <th >UserKey</th>
+          <th >IssueId</th>
+          <th >TimeInSecond</th>
+          <th >StartedTime</th>
+          <th style="width: 50%;">Comment</th>
+        </tr>
+
+        @for(workLog: zIssueTrackingIssueWorklogs <- workLogs) {
           <tr>
             <th>@workLog.getUserKey</th>
             <th>@workLog.getIssueId</th>
@@ -53,8 +53,9 @@
         }
 
 
-
       </table>
-    }
+    }else{
+    <h2 style="color: #52a4ff"> Please, enter the current parameters of search</h2>
+  }
   </form>
 }
