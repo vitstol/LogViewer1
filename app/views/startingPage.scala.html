@@ -1,0 +1,47 @@
+@import entity.zIssueTrackingIssueWorklogs
+@import service.GlobalService
+@(userKeys: List[String],
+        selectedKey:String = "",
+        workLogs:List[zIssueTrackingIssueWorklogs]=null,
+        time:Int=0,
+        beginDate:String="",
+        endDate:String="",
+        startTable:Map[String,Int]=null)
+@*TODO add beautffull styles*@
+@main("Welcome to LogViewer") {
+  <script>
+      function onClickFunc(e){
+         window.location="/getlogs/"+$('#selectedKey')+"?beginDate="+$('#beginDate')+"&enddate="+$('#endDate');
+      }
+
+  </script>
+
+  <form action="/" method="get"  >
+    <h2 style="color: #52a4ff"> Please, select user</h2>
+    <select size="1" id="keyuser" name="keyuser">
+      <option value="@GlobalService.START_OPTION">
+      @GlobalService.START_OPTION
+      </option>
+      @for(key:String<- userKeys) {
+        <option value="@key" @if(selectedKey.equals(key)){selected}>
+        @key
+        </option>
+      }
+    </select>
+    <label for="begindate" style="color: #52a4ff; ">Set the begin date
+      <input type="date" placeholder="yyyy-MM-dd" value="@beginDate" id="begindate" name="begindate" required checked/>
+    </label>
+    <label for="enddate" style="color: #52a4ff;">Set the end date
+      <input type="date" placeholder="yyyy-MM-dd" value="@endDate"  id = "enddate" name="enddate" required checked/>
+    </label>
+    <p> <button type="submit" id="button" onclick="onClickFunc(e)">Submit</button> </p>
+    </form>
+
+  @if(selectedKey==""|GlobalService.START_OPTION.equals(selectedKey)) {
+    @firstTable(userKeys: List[String], selectedKey:String,  beginDate:String,
+      endDate:String, startTable:Map[String,Int])
+    }else {
+    @secondTable(userKeys: List[String], selectedKey:String, workLogs:List[zIssueTrackingIssueWorklogs],
+    time:Int, beginDate:String, endDate:String)
+     }
+  }

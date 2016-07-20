@@ -19,6 +19,15 @@ public class zIssueTrackingIssueWorklogs {
     private DateTime StartedDate;
     private DateTime UpdatedDate;
     private Integer TimeInSeconds;
+
+    public Integer getTimeInSeconds() {
+        return TimeInSeconds;
+    }
+
+    public void setTimeInSeconds(Integer timeInSeconds) {
+        TimeInSeconds = timeInSeconds;
+    }
+
     private String UserKey;
     private String Comment;
 
@@ -84,14 +93,7 @@ public class zIssueTrackingIssueWorklogs {
         UpdatedDate = updatedDate;
     }
 
-    @JsonIgnore
-    public Integer getTimeInSeconds() {
-        return TimeInSeconds;
-    }
 
-    public void setTimeInSeconds(Integer timeInSeconds) {
-        TimeInSeconds = timeInSeconds;
-    }
 
     @JsonIgnore
     public String getUserKey() {

@@ -1,0 +1,34 @@
+@import entity.zIssueTrackingIssueWorklogs
+@import service.GlobalService
+@(userKeys: List[String], selectedKey:String = "",
+        workLogs:List[zIssueTrackingIssueWorklogs],
+        time:Int, beginDate:String="",
+        endDate:String="")
+@main("Welcome to LogViewer") {
+<div class="secondTable" id="secondTable">
+    <h4 style="color: #52a4ff;">Work Logs</h4>
+<table align = "left" width=100%>
+    <tr>
+        <th>Sum time in hour</th>
+        <th>@(GlobalService.timeHour(time))h @(GlobalService.timeMin(time))m</th>
+    </tr>
+    <tr>
+        <th >UserKey</th>
+        <th >IssueId</th>
+        <th >TimeInHour</th>
+        <th >StartedTime</th>
+        <th style="width: 50%;">Comment</th>
+    </tr>
+
+    @for(workLog: zIssueTrackingIssueWorklogs <- workLogs) {
+    <tr>
+        <th>@workLog.getUserKey</th>
+        <th>@workLog.getIssueId</th>
+        <th>@GlobalService.timeHour(workLog.getTimeInSeconds)h @(GlobalService.timeMin(workLog.getTimeInSeconds))m</th>
+        <th>@workLog.getStartedDate</th>
+        <th>@workLog.getComment</th>
+    </tr>
+    }
+</table>
+</div>
+}
