@@ -16,7 +16,7 @@ class Application extends Controller {
     */
   def getUserKeys = Action { implicit request =>
     val globalService = new GlobalService()
-    Redirect(s"/getlogs/${GlobalService.START_OPTION}?begindate="+globalService.getBeginDate+"&enddate="+globalService.getEndDate)
+    Redirect(s"/getlogs/${globalService.getUserKeys}?begindate="+globalService.getBeginDate+"&enddate="+globalService.getEndDate)
   }
   /**
     * Post main information about User - IssueId, Started time,

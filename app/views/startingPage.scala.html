@@ -16,9 +16,9 @@
 
   </script>
 
-  <form action="/" method="get"  >
-    <h2 style="color: #52a4ff"> Please, select user</h2>
-    <select size="1" id="keyuser" name="keyuser">
+  <form action="/" method="get"   >
+    <h2 class="text-info" > Please, select user</h2>
+    <select size="1" id="keyuser" name="keyuser" class="form-control">
       <option value="@GlobalService.START_OPTION">
       @GlobalService.START_OPTION
       </option>
@@ -28,13 +28,14 @@
         </option>
       }
     </select>
-    <label for="begindate" style="color: #52a4ff; ">Set the begin date
-      <input type="date" placeholder="yyyy-MM-dd" value="@beginDate" id="begindate" name="begindate" required checked/>
+    <label for="begindate" style="color: #52a4ff; " class="text-info">Set the begin date
+      <input type="date" placeholder="yyyy-MM-dd"
+      value="@beginDate" id="begindate" name="begindate " required checked class="form-control" />
     </label>
-    <label for="enddate" style="color: #52a4ff;">Set the end date
-      <input type="date" placeholder="yyyy-MM-dd" value="@endDate"  id = "enddate" name="enddate" required checked/>
+    <label for="enddate" style="color: #52a4ff;" class="text-info">Set the end date
+      <input type="date" placeholder="yyyy-MM-dd" value="@endDate"  id = "enddate" name="enddate" class="form-control"  required checked/>
     </label>
-    <p> <button type="submit" id="button" onclick="onClickFunc(e)">Submit</button> </p>
+    <p> <button type="submit" id="button" onclick="onClickFunc(e)" class="btn btn-default" >Submit</button> </p>
     </form>
 
   @if(selectedKey==""|GlobalService.START_OPTION.equals(selectedKey)) {

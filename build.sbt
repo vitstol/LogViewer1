@@ -20,9 +20,11 @@ libraryDependencies ++= Seq( jdbc , cache , ws   , specs2 % Test ,
   "org.springframework" % "spring-context-support" % "4.2.3.RELEASE",
   "org.springframework.data" % "spring-data-jpa" % "1.9.1.RELEASE",
   "org.psnively" %% "spring_scala_4-2-0" % "1.0.0",
-  "org.springframework" % "spring-webmvc" % "4.0.0.RELEASE"
+  "org.springframework" % "spring-webmvc" % "4.0.0.RELEASE",
+  "com.adrianhurt" %% "play-bootstrap" % "1.1-P25-B3-SNAPSHOT" exclude("org.webjars", "jquery"),
+  "org.webjars" % "jquery" % "2.1.0"
 )
 
-unmanagedResourceDirectories in Test <+=  baseDirectory ( _ /"target/web/public/test" )  
+unmanagedResourceDirectories in Test <+=  baseDirectory ( _ /"target/web/public/test" )
 
-resolvers += "scalaz-bintray" at "https://dl.bintray.com/scalaz/releases"
+resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots/"

@@ -3,15 +3,15 @@
         endDate:String="", TimesForAllUsersFromSelectMonth:Map[String,Int])
 @main("Welcome to LogViewer") {
   <div class="firstTable" id="firstTable">
-    <h2 style="color: #52a4ff"> Please, enter the current parameters of search</h2>
-    <table align = "left" width=100%>
-      <tr>
+    <h2 class="text-warning"> Please, enter the current parameters of search</h2>
+    <table align = "left" width=100% class="table table-hover">
+      <tr class ="info">
         <th >UserKey</th>
         <th >TimeInHour</th>
       </tr>
       @for(table: (String, Int) <- TimesForAllUsersFromSelectMonth) {
         <tr>
-          <th>@table._1</th>
+          <th class = "active">@table._1</th>
           <th>@table._2</th>
         </tr>
       }
