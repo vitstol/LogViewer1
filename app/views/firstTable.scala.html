@@ -1,18 +1,21 @@
+@import service.GlobalService
 @(userKeys: List[String], selectedKey:String = "",
         beginDate:String="",
         endDate:String="", TimesForAllUsersFromSelectMonth:Map[String,Int])
 @main("Welcome to LogViewer") {
-  <div class="firstTable" id="firstTable">
+  <div class="table" id="firstTable">
     <h2 class="text-warning"> Please, enter the current parameters of search</h2>
-    <table align = "left" width=100% class="table table-hover">
+    <table align = "left"  class="table table-hover">
       <tr class ="info">
-        <th >UserKey</th>
-        <th >TimeInHour</th>
+        <th class="col-xs-2">UserKey</th>
+        <th class="col-xs-4">Time In Hour</th>
       </tr>
       @for(table: (String, Int) <- TimesForAllUsersFromSelectMonth) {
-        <tr>
-          <th class = "active">@table._1</th>
-          <th>@table._2</th>
+        <tr >
+          <td class = "active col-xs-2">@table._1</td>
+          <td class="col-xs-4">@if(GlobalService.timeMin(table._2) ==0){
+            @(GlobalService.timeHour(table._2))h
+          }else{@(GlobalService.timeHour(table._2))h @(GlobalService.timeMin(table._2))m}</td>
         </tr>
       }
     </table>

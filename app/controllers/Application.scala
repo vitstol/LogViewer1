@@ -16,34 +16,34 @@ class Application extends Controller {
     */
   def getUserKeys = Action { implicit request =>
     val globalService = new GlobalService()
-    Redirect(s"/getlogs/${globalService.getUserKeys}?begindate="+globalService.getBeginDate+"&enddate="+globalService.getEndDate)
+    Redirect(s"/getlogs/${GlobalService.START_OPTION}?beginDate="+globalService.getBeginDate+"&endDate="+globalService.getEndDate)
   }
   /**
     * Post main information about User - IssueId, Started time,
     * Comments, Working hours for a period of time
     * @return table with information about selected user
     */
-    def getWorkLogs(userkey:String,begindate:String,enddate:String) = Action { request =>
+    def getWorkLogs(userkey:String,beginDate:String,endDate:String) = Action { request =>
     val globalService: GlobalService = new GlobalService
     if(GlobalService.START_OPTION.equals(userkey)|userkey==null) {
       Ok(views.html.startingPage(
         //all
         userKeys = globalService.getUserKeys,
         selectedKey = userkey,
-        beginDate=begindate,
-        endDate=enddate,
-        startTable=globalService.getTimesForAllUsersFromSelectMonth(begindate,enddate)))
+        beginDate=beginDate,
+        endDate=endDate,
+        startTable=globalService.getTimesForAllUsersFromSelectMonth(beginDate,endDate)))
       } else {
         //user
-        val logs : List[zIssueTrackingIssueWorklogs] = globalService.getWorkLogs(userkey, begindate, enddate)
+        val logs : List[zIssueTrackingIssueWorklogs] = globalService.getWorkLogs(userkey, beginDate, endDate)
         val sumTime:Int=logs.foldLeft(0)(_+_.getTimeInSeconds)
         Ok(views.html.startingPage(
           userKeys=globalService.getUserKeys,
           selectedKey=userkey,
           workLogs = logs,
           time = sumTime,
-          beginDate=begindate,
-          endDate=enddate))
+          beginDate=beginDate,
+          endDate=endDate))
       }
 
     }

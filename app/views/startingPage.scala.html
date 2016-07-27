@@ -9,35 +9,69 @@
         startTable:Map[String,Int]=null)
 @*TODO add beautffull styles*@
 @main("Welcome to LogViewer") {
-  <script>
-      function onClickFunc(e){
-         window.location="/getlogs/"+$('#selectedKey')+"?beginDate="+$('#beginDate')+"&enddate="+$('#endDate');
-      }
 
+
+    <script type="text/javascript">
+       // A $( document ).ready() block.
+    jQuery( document ).ready(function() {
+      jQuery( "#submit" ).on( "click", function(event) {
+        window.location.replace("/getlogs/"+$('#selectedKey option:selected').val()+"?beginDate="+$('#beginDate').val()+"&endDate="+$('#endDate').val());
+      });
+    });
   </script>
 
-  <form action="/" method="get"   >
-    <h2 class="text-info" > Please, select user</h2>
-    <select size="1" id="keyuser" name="keyuser" class="form-control">
-      <option value="@GlobalService.START_OPTION">
-      @GlobalService.START_OPTION
-      </option>
-      @for(key:String<- userKeys) {
-        <option value="@key" @if(selectedKey.equals(key)){selected}>
-        @key
-        </option>
-      }
-    </select>
-    <label for="begindate" style="color: #52a4ff; " class="text-info">Set the begin date
-      <input type="date" placeholder="yyyy-MM-dd"
-      value="@beginDate" id="begindate" name="begindate " required checked class="form-control" />
-    </label>
-    <label for="enddate" style="color: #52a4ff;" class="text-info">Set the end date
-      <input type="date" placeholder="yyyy-MM-dd" value="@endDate"  id = "enddate" name="enddate" class="form-control"  required checked/>
-    </label>
-    <p> <button type="submit" id="button" onclick="onClickFunc(e)" class="btn btn-default" >Submit</button> </p>
-    </form>
 
+
+<div class="main">
+    <div class="container" >
+        <form action="/" method="get" id="mainform" class="form-group">
+          <div class="container">
+              <div >
+                  <h2  class="col-sm-6   text-info">Jira User logs</h2>
+              </div>
+          </div>
+          <div class="container">
+          <h5  class="col-sm-2   text-info">Please, select user</h5>
+              <div class="col-sm-4">
+              <select size="1" id="selectedKey" name="keyuser" class="form-control ">
+                <option value="@GlobalService.START_OPTION">
+                    @GlobalService.START_OPTION
+                </option>
+                 @for(key:String<- userKeys) {
+                    <option value="@key" @if(selectedKey.equals(key)){selected}>
+                         @key
+                     </option>
+          }
+              </select>
+              </div>
+        </div>
+          <p></p>
+          <div class="container">
+          <h5  class="col-sm-2 text-info">Set the begin date</h5>
+              <div class="col-sm-4" >
+                <input type="text" placeholder="yyyy-MM-dd"
+        value="@beginDate" id="beginDate" name="beginDate " required checked class="form-control" />
+              </div>
+          </div>
+          <p></p>
+          <div class="container">
+              <h5 class="col-sm-2  text-info">Set the end date</h5>
+            <div class="col-sm-4 " >
+                <input type="text" placeholder="yyyy-MM-dd" value="@endDate"
+        id = "endDate" name="endDate" class="form-control" required checked/>
+             </div>
+          </div>
+          <p></p>
+          <div class="container">
+              <div class="col-sm-offset-5 col-sm-2">
+              <button type="button" id="submit" class="btn btn-default" >Submit</button>
+                  </div>
+          </div>
+      </form>
+    </div>
+</div>
+
+<div class="container">
   @if(selectedKey==""|GlobalService.START_OPTION.equals(selectedKey)) {
     @firstTable(userKeys: List[String], selectedKey:String,  beginDate:String,
       endDate:String, startTable:Map[String,Int])
@@ -46,3 +80,4 @@
     time:Int, beginDate:String, endDate:String)
      }
   }
+</div>

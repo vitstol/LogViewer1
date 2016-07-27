@@ -5,30 +5,50 @@
         time:Int, beginDate:String="",
         endDate:String="")
 @main("Welcome to LogViewer") {
-<div class="secondTable" id="secondTable">
-    <h4 class="text-info">Work Logs</h4>
-<table align = "left" width=100% class="table table-hover">
-    <tr>
-        <th>Sum time in hour</th>
-        <th>@(GlobalService.timeHour(time))h @(GlobalService.timeMin(time))m</th>
-    </tr>
-    <tr class="info">
-        <th >UserKey</th>
-        <th >IssueId</th>
-        <th >TimeInHour</th>
-        <th >StartedTime</th>
-        <th style="width: 50%;">Comment</th>
-    </tr>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.tablesorter.js"></script>
 
+    <script>
+            jQuery(document).ready(function()
+                    {
+                        jQuery("#secondtableid").tablesorter();
+                    }
+            );
+    </script>
+
+
+    <div class="secondTable" id="secondTable">
+    <h4 class="text-info">Work Logs</h4>
+   <div>
+    <h4 class="col-sm-4 text-info">Summary time in hour</h4>
+    <h4 class="col-sm-2">@if(GlobalService.timeMin(time) ==0){
+        @(GlobalService.timeHour(time))h
+    }else{@(GlobalService.timeHour(time))h @(GlobalService.timeMin(time))m}</h4>
+   </div>
+
+
+<table align = "left" class="table  table-bordered table-hover tablesorter" cellspacing="0" id="secondtableid" width="100%">
+    <thead>
+        <tr class="info">
+            <th >UserKey</th>
+            <th >IssueId</th>
+            <th >Time In Hour</th>
+            <th >Started Time</th>
+            <th style="width: 50%;">Comment</th>
+        </tr>
+    </thead>
     @for(workLog: zIssueTrackingIssueWorklogs <- workLogs) {
     <tr>
-        <th class="active">@workLog.getUserKey</th>
-        <th>@workLog.getIssueId</th>
-        <th>@GlobalService.timeHour(workLog.getTimeInSeconds)h @(GlobalService.timeMin(workLog.getTimeInSeconds))m</th>
-        <th>@workLog.getStartedDate</th>
-        <th>@workLog.getComment</th>
+        <td class="active">@workLog.getUserKey</td>
+        <td>@workLog.getIssueId</td>
+        <td>@if(GlobalService.timeMin(workLog.getTimeInSeconds) ==0){
+            @(GlobalService.timeHour(workLog.getTimeInSeconds))h
+        }else{@(GlobalService.timeHour(workLog.getTimeInSeconds))h @(GlobalService.timeMin(workLog.getTimeInSeconds))m}</td>
+        <td>@workLog.getStartedDate</td>
+        <td>@workLog.getComment</td>
     </tr>
     }
 </table>
 </div>
+
 }
