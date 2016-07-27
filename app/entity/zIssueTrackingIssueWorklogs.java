@@ -19,6 +19,15 @@ public class zIssueTrackingIssueWorklogs {
     private DateTime StartedDate;
     private DateTime UpdatedDate;
     private Integer TimeInSeconds;
+    private String  DisplayName;
+
+    public String getDisplayName() {
+        return DisplayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        DisplayName = displayName;
+    }
 
     public Integer getTimeInSeconds() {
         return TimeInSeconds;

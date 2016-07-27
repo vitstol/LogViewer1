@@ -32,7 +32,8 @@ class Application extends Controller {
         selectedKey = userkey,
         beginDate=beginDate,
         endDate=endDate,
-        startTable=globalService.getTimesForAllUsersFromSelectMonth(beginDate,endDate)))
+        startTable=globalService.getTimesForAllUsersFromSelectMonth(beginDate,endDate),
+        totalSum=globalService.totalSum(beginDate,endDate)))
       } else {
         //user
         val logs : List[zIssueTrackingIssueWorklogs] = globalService.getWorkLogs(userkey, beginDate, endDate)

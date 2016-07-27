@@ -1,12 +1,13 @@
 @import entity.zIssueTrackingIssueWorklogs
 @import service.GlobalService
-@(userKeys: List[String],
+@(userKeys: Map[String,String],
         selectedKey:String = "",
         workLogs:List[zIssueTrackingIssueWorklogs]=null,
         time:Int=0,
         beginDate:String="",
         endDate:String="",
-        startTable:Map[String,Int]=null)
+        startTable:Map[String,Int]=null,
+        totalSum:Int=0)
 @*TODO add beautffull styles*@
 @main("Welcome to LogViewer") {
 
@@ -37,9 +38,9 @@
                 <option value="@GlobalService.START_OPTION">
                     @GlobalService.START_OPTION
                 </option>
-                 @for(key:String<- userKeys) {
-                    <option value="@key" @if(selectedKey.equals(key)){selected}>
-                         @key
+                 @for(key:(String,String)<- userKeys) {
+                    <option value="@key._2" @if(selectedKey.equals(key._2)){selected}>
+                         @key._1
                      </option>
           }
               </select>
@@ -73,10 +74,10 @@
 
 <div class="container">
   @if(selectedKey==""|GlobalService.START_OPTION.equals(selectedKey)) {
-    @firstTable(userKeys: List[String], selectedKey:String,  beginDate:String,
-      endDate:String, startTable:Map[String,Int])
+    @firstTable(userKeys: Map[String,String], selectedKey:String,  beginDate:String,
+      endDate:String, startTable:Map[String,Int], totalSum:Int)
     }else {
-    @secondTable(userKeys: List[String], selectedKey:String, workLogs:List[zIssueTrackingIssueWorklogs],
+    @secondTable(userKeys: Map[String,String], selectedKey:String, workLogs:List[zIssueTrackingIssueWorklogs],
     time:Int, beginDate:String, endDate:String)
      }
   }

@@ -14,27 +14,31 @@ class GlobalService {
 
   /**
     * The method to get list UserKey's in selector
+    *
     * @return UserKey's values
     */
-  def getUserKeys: List[String] = {
+  def getUserKeys: Map[String,String] = {
     try {
       val statement = conn.createStatement()
       val result = statement.executeQuery(GlobalService.GET_USER_KEYS_QUERY)
-      val resultIter = new Iterator[String] {
+      val resultIter = new Iterator[(String,String)] {
         def hasNext = result.next()
-        def next() = result.getString("UserKey")
+        def next() = {
+          (result.getString(1), result.getString(2))
+        }
       }
-      val resultList = resultIter.toList
-      resultList
+      val resultMap = resultIter.toMap
+      resultMap
     } catch {
-      case e:SQLException => e.getNextException
-        List()
+      case e:SQLException => e.getErrorCode
+        Map()
     }
   }
 
 
   /**
     * Global method to work with Database. Getting all information from DB and posting on the page.
+    *
     * @param key get chosen key from selector
     * @param beginDate get begin date
     * @param endingDate  get ending date
@@ -66,10 +70,11 @@ class GlobalService {
       val resultList = resultIter.toList
       resultList
     }catch {
-      case e:SQLException => e.getNextException
+      case e:SQLException => e.getErrorCode
         List()
     }
   }
+
   def getTimesForAllUsersFromSelectMonth(beginDate:String, endingDate:String): Map[String,Int] ={
     try{
       val statement = conn.prepareStatement(GlobalService.GET_TIME_FOR_ALL_USERS_FROM_SELECT_MONTH)
@@ -85,10 +90,16 @@ class GlobalService {
       val resultMap = resultIter.toMap[String,Int]
       resultMap
     } catch {
-      case e:SQLException => e.getNextException
+      case e:SQLException => e.getErrorCode
         Map()
     }
+  }
+
+    def totalSum(beginDate:String, endingDate:String):Int={
+    val x =  getTimesForAllUsersFromSelectMonth(beginDate,endingDate)
+    x.values.sum
     }
+
 
     /**
     * Close connection from DB
@@ -105,6 +116,8 @@ class GlobalService {
 
   def getEndDate:String={
     GlobalService.formatter.print(new DateTime())
+
+
   }
 }
 
@@ -114,25 +127,31 @@ class GlobalService {
    val login = "ITDimension"
    val password = "ITDimension$4968128$"
 
+   val GET_USER_KEYS_QUERY = "select U.DisplayName, U.UserKey from zIssueTrackingUsers U where U.TargetId=270 and U.UserKey in " +
+     "(  Select W.UserKey from zIssueTrackingIssueWorklogs W where W.TargetId=270);"
 
-   val GET_USER_KEYS_QUERY ="SELECT UserKey FROM zIssueTrackingIssueWorklogs GROUP BY userKey"
+
    val GET_WORK_LOGS = "SELECT * FROM zIssueTrackingIssueWorklogs WHERE UserKey = ? and TargetId LIKE '270' AND StartedDate " +
      "BETWEEN ? AND ? "
-//   val GET_TIME_IN_HOUR_FROM_CURR_YEAR = "SELECT  sum(TimeInSeconds) from zIssueTrackingIssueWorklogs where UserKey = ? " +
-//     "AND TargetId LIKE '270' and StartedDate BETWEEN ? AND ? GROUP BY UserKey "
+
+   val GET_WORK_LOGS1 = "SELECT  U.DisplayName, W.* from zIssueTrackingIssueWorklogs W , zIssueTrackingUsers U where WHERE U.DisplayName = ? " +
+     "W.StartedDate BETWEEN ? AND ? and W.TargetId like '270' AND W.TargetId = U.TargetId AND W.UserKey  = U.UserKey;"
+
    val GET_TIME_FOR_ALL_USERS_FROM_SELECT_MONTH = "SELECT U.DisplayName, SUM (TimeInSeconds) AS 'Hours' FROM zIssueTrackingIssueWorklogs W, " +
      "zIssueTrackingUsers U WHERE W.TargetId = 270 AND W.TargetId = U.TargetId AND W.UserKey  = U.UserKey    " +
      " AND StartedDate BETWEEN ? AND ? GROUP BY U.DisplayName ORDER BY Hours DESC"
+
    val START_OPTION = "All"
 
-   val formatter:DateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd")
+   val formatter: DateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd")
 
-   def timeHour(t:Int) ={
-     t/3600
+   def timeHour(t: Int) = {
+     t / 3600
    }
 
-   def timeMin(t:Int) ={
-     t%3600/60
+   def timeMin(t: Int) = {
+     t % 3600 / 60
    }
+
 
  }
